@@ -103,10 +103,16 @@ static int is_executable(const char *name)
 		return 0;
 
 #if defined(WIN32) || defined(__CYGWIN__)
+if (has_extension(name, ".exe"))
+{	/* cannot trust the executable bit, see if it has a .exe postfix first.
+	 * We do this because virus scanners may slow down open on .exe
+	 * files. */
+	return S_IXUSR;
+}
 #if defined(__CYGWIN__)
 if ((st.st_mode & S_IXUSR) == 0)
 #endif
-{	/* cannot trust the executable bit, peek into the file instead */
+{	/* now that we know it does not have .exe, peek into the file instead */
 	char buf[3] = { 0 };
 	int n;
 	int fd = open(name, O_RDONLY);
