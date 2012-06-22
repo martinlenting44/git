@@ -466,4 +466,3 @@ extern double measure_time_aux(const char *file, int lineno, const char *fmt, ..
 #define measure_time(...) \
 	measure_time_aux(__FILE__, __LINE__, __VA_ARGS__)
 #endif
-
