@@ -145,8 +145,6 @@ static void list_commands_in_dir(struct cmdnames *cmds,
 	while ((de = readdir(dir)) != NULL) {
 		int entlen;
 
-		measure_time("after readdir (%s)", de->d_name);
-
 		if (prefixcmp(de->d_name, prefix))
 			continue;
 
@@ -160,19 +158,16 @@ static void list_commands_in_dir(struct cmdnames *cmds,
 			entlen -= 4;
 
 		add_cmdname(cmds, de->d_name + prefix_len, entlen);
-		measure_time("before readdir");
 	}
 	closedir(dir);
 	strbuf_release(&buf);
 }
 
-static int skip_scanning_path = 1;
-
 void load_command_list(const char *prefix,
 		struct cmdnames *main_cmds,
 		struct cmdnames *other_cmds)
 {
-	const char *env_path = skip_scanning_path ? NULL : getenv("PATH");
+	const char *env_path = getenv("PATH");
 	const char *exec_path = git_exec_path();
 
 	if (exec_path) {
