@@ -462,7 +462,7 @@ extern const char *get_windows_home_directory();
 #define get_home_directory() get_windows_home_directory()
 
 extern double measure_time_aux(const char *file, int lineno, const char *fmt, ...);
-#ifdef __GNUCC__
+#ifdef __GNUC__
 #define measure_time(...) \
 	measure_time_aux(__FILE__, __LINE__, __VA_ARGS__)
 #endif
