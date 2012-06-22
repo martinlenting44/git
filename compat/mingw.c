@@ -2193,6 +2193,6 @@ double measure_time_aux(const char *file, int lineno, const char *fmt, ...)
 	vfprintf(stderr, fmt, ap);
 	va_end(ap);
 
-	fprintf(stderr, ": %lf\n", diff);
+	fprintf(stderr, ": %f\n", diff);
 	return diff;
 }
