@@ -145,7 +145,7 @@ static void list_commands_in_dir(struct cmdnames *cmds,
 	while ((de = readdir(dir)) != NULL) {
 		int entlen;
 
-		printf("after readdir (%s): %i\n", de->d_name, measure_time());
+		measure_time("after readdir (%s)", de->d_name);
 
 		if (prefixcmp(de->d_name, prefix))
 			continue;
@@ -160,7 +160,7 @@ static void list_commands_in_dir(struct cmdnames *cmds,
 			entlen -= 4;
 
 		add_cmdname(cmds, de->d_name + prefix_len, entlen);
-		printf("before readdir: %i\n", measure_time());
+		measure_time("before readdir");
 	}
 	closedir(dir);
 	strbuf_release(&buf);

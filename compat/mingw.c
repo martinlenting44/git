@@ -2149,8 +2149,12 @@ void mingw_startup()
 	winansi_init();
 }
 
-int measure_time()
+#ifdef __GNUC__
+__attribute__((format (printf, 1, 2)))
+#endif
+int measure_time(const char *fmt, ...)
 {
+	va_list ap;
 	static LARGE_INTEGER last;
 	LARGE_INTEGER current;
 	int diff;
@@ -2165,5 +2169,11 @@ int measure_time()
 
 	diff = current.LowPart - last.LowPart;
 	last = current;
+
+	va_start(ap, fmt);
+	vfprintf(stderr, fmt, ap);
+	va_end(ap);
+
+	fprintf(stderr, ": %i\n", diff);
 	return diff;
 }
